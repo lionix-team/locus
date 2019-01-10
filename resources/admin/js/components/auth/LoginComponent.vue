@@ -1,5 +1,5 @@
 <template>
-    <guest>
+    <guest-layout>
         <h1 class="display-4 text-center mb-3">
             Sign in
         </h1>
@@ -34,15 +34,16 @@
                 Sign in
             </button>
         </form>
-    </guest>
+    </guest-layout>
 </template>
 
 <script>
-    import Guest from '../layouts/GuestComponent'
+    import GuestLayout from '../layouts/GuestLayoutComponent'
     import {EyeIcon} from 'vue-feather-icons'
     import {mapActions, mapGetters} from 'vuex'
 
     export default {
+        components: {GuestLayout, EyeIcon},
         data() {
             return {
                 form: {
@@ -53,7 +54,6 @@
                 loading: false
             }
         },
-        components: {Guest, EyeIcon},
         methods: {
             ...mapActions([
                 'login'
@@ -63,7 +63,6 @@
             ]),
             signIn() {
                 this.error = false;
-                // this.loading = true;
                 this.login({form: this.form}).then((res) => {
                     this.loading = false;
                     localStorage.setItem('locus_token', res.access_token);

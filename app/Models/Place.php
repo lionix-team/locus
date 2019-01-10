@@ -20,16 +20,20 @@ use Illuminate\Database\Eloquent\Model;
  * @property string|null $close_at
  * @property \Illuminate\Support\Carbon|null $created_at
  * @property \Illuminate\Support\Carbon|null $updated_at
- * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Place newModelQuery()
- * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Place newQuery()
- * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Place query()
+ * @method static \Illuminate\Database\Eloquent\Builder|Place newModelQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder|Place newQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder|Place query()
  * @mixin \Eloquent
+ * @property-read \Illuminate\Database\Eloquent\Collection|\App\Models\PlaceFuelType[] $fuelTypes
  */
 class Place extends Model
 {
     protected $table = 'places';
+    protected $fillable = ['name', 'place_id', 'type', 'latitude', 'longitude', 'street', 'price', 'photo', 'open_at', 'close_at'];
+    protected $with = ['fuelTypes'];
 
-    protected $fillable = ['name', 'place_id', 'type', 'latitude', 'longitude','street'];
+    //Place types
+    const TYPE_GAS_STATION = 'gas_station';
 
     /**
      * Places types
@@ -41,5 +45,15 @@ class Place extends Model
         return [
             'gas_station' => 1
         ];
+    }
+
+    /**
+     * Relationship for get place all fuel types
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function fuelTypes()
+    {
+        return $this->hasMany(PlaceFuelType::class, 'place_id', 'id');
     }
 }

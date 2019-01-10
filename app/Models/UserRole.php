@@ -11,9 +11,9 @@ use Illuminate\Database\Eloquent\Model;
  * @property string $name
  * @property \Illuminate\Support\Carbon|null $created_at
  * @property \Illuminate\Support\Carbon|null $updated_at
- * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\UserRole newModelQuery()
- * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\UserRole newQuery()
- * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\UserRole query()
+ * @method static \Illuminate\Database\Eloquent\Builder|UserRole newModelQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder|UserRole newQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder|UserRole query()
  * @mixin \Eloquent
  */
 class UserRole extends Model

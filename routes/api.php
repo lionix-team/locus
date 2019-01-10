@@ -14,3 +14,4 @@ use Illuminate\Http\Request;
 */
 
 Route::get('/places', 'PlaceController@index');
+Route::get('/fuel-types', 'FuelTypeController');

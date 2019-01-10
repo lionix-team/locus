@@ -16,6 +16,15 @@ class Repository
     }
 
     /**
+     * Get all records
+     *
+     * @return \Eloquent[]|\Illuminate\Database\Eloquent\Collection
+     */
+    public function all() {
+        return $this->model->all();
+    }
+
+    /**
      * Get record by id
      *
      * @param $id
