@@ -2,21 +2,51 @@
 
 namespace App\Http\Controllers\Api;
 
+use App\Helpers\StatusCodeHelper;
+use App\Http\Resources\PlaceResource;
+use App\Models\Place;
 use App\Repositories\PlaceRepository;
 use App\Services\PlaceService;
 use App\Http\Controllers\Controller;
+use Response;
 
 class PlaceController extends Controller
 {
+    private $statusCode;
+    private $success;
+    private $data;
+    private $errors;
     private $repository;
 
-    public function __construct(PlaceRepository $placeRepository)
+    public function __construct(PlaceRepository $repository)
     {
-        $this->repository = $placeRepository;
+        $this->statusCode = StatusCodeHelper::HTTP_BAD_REQUEST;
+        $this->success = false;
+        $this->data = [];
+        $this->errors = [];
+        $this->repository = $repository;
     }
 
     public function index()
     {
-        PlaceService::synchronize();
+        $places = $this->repository->all();
+        $this->data['places'] = $places;
+        $this->statusCode = StatusCodeHelper::HTTP_OK;
+        $this->success = true;
+        return Response::api($this->success, $this->data, $this->errors, $this->statusCode);
+    }
+
+    /**
+     * Get place
+     *
+     * @param Place $place
+     * @return mixed
+     */
+    public function show(Place $place)
+    {
+        $this->statusCode = StatusCodeHelper::HTTP_OK;
+        $this->data['place'] = new PlaceResource($place);
+        $this->success = true;
+        return Response::api($this->success, $this->data, $this->errors, $this->statusCode);
     }
 }

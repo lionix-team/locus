@@ -5,6 +5,8 @@ import * as actions from './actions'
 export default {
     state: {
         street: {},
+        place: {},
+        places: {},
     },
     mutations: mutations,
     getters: getters,

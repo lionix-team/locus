@@ -20,7 +20,8 @@ class Repository
      *
      * @return \Eloquent[]|\Illuminate\Database\Eloquent\Collection
      */
-    public function all() {
+    public function all()
+    {
         return $this->model->all();
     }
 
@@ -44,7 +45,7 @@ class Repository
     public function create($data)
     {
         /** @var Model $model */
-        $this->model=new $this->model;
+        $this->model = new $this->model;
         $this->model->fill($data);
         $this->model->save();
         return $this->model;
@@ -55,12 +56,13 @@ class Repository
      *
      * @param Model $model
      * @param $data
-     * @return bool
+     * @return Model
      */
     public function edit(Model $model, $data)
     {
         $model->fill($data);
-        return $model->save();
+        $model->save();
+        return $model;
     }
 
     /**

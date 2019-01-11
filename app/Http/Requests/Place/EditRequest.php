@@ -4,7 +4,7 @@ namespace App\Http\Requests\Place;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class CreateRequest extends FormRequest
+class EditRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -28,7 +28,6 @@ class CreateRequest extends FormRequest
             'latitude' => 'required|numeric|min:1',
             'longitude' => 'required|numeric|min:1',
             'street' => 'required',
-            'photo' => 'required',
             'fuel_types.*.price' => 'nullable|numeric|max:1000',
         ];
     }

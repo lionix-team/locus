@@ -7,7 +7,7 @@
     <title>Laravel</title>
     <link rel="stylesheet" href="{{asset('/assets/admin/css/admin.css')}}">
 </head>
-<body class="d-flex align-items-center bg-auth border-top border-top-2 border-primary">
+<body class="d-flex bg-auth border-top border-top-2 border-primary">
 <div id="admin"></div>
 <script type="text/javascript" src="{{asset('/assets/admin/js/admin.js')}}"></script>
 </body>

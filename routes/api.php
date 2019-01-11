@@ -12,6 +12,8 @@ use Illuminate\Http\Request;
 | is assigned the "api" middleware group. Enjoy building your API!
 |
 */
-
-Route::get('/places', 'PlaceController@index');
+Route::prefix('places')->group(function () {
+    Route::get('/', 'PlaceController@index');
+    Route::get('/{place}', 'PlaceController@show');
+});
 Route::get('/fuel-types', 'FuelTypeController');

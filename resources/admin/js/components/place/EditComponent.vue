@@ -4,7 +4,7 @@
             <div class="header mt-md-6">
                 <div class="header-body">
                     <h1 class="header-title">
-                        Create place
+                        Edit place
                     </h1>
                 </div>
             </div>
@@ -107,7 +107,7 @@
                                 </div>
                             </div>
                         </div>
-                        <button class="btn btn-primary" type="submit" :disabled="loading">Create</button>
+                        <button class="btn btn-primary" type="submit" :disabled="loading">Edit</button>
                     </form>
                 </div>
             </div>
@@ -123,6 +123,7 @@
         components: {LoginnedLayout},
         data() {
             return {
+                id: this.$route.params['id'],
                 form: {
                     latitude: 40.0652158,
                     longitude: 43.9197151,
@@ -130,10 +131,10 @@
                     open_at: '',
                     close_at: '',
                     photo: null,
-                    photoPath: null
+                    photoPath: null,
                 },
                 fuel_types: [],
-                loading: false,
+                loading:false,
                 errors: {},
                 center: {
                     lat: 40.0652158,
@@ -146,9 +147,6 @@
             }
         },
         mounted() {
-            this.getFuelTypes().then(() => {
-                this.fuel_types = this.fuelTypesGetter();
-            });
             this.getStreet(this.center);
             this.$store.watch(this.streetGetter, street => {
                 this.form.street = street;
@@ -160,28 +158,48 @@
                 }
                 this.hours.push(hour);
             }
+            this.getPlace({id: this.id}).then(() => {
+                this.form = this.placeGetter();
+                this.form.photo="";
+                this.center.lat = this.form.latitude;
+                this.center.lng = this.form.longitude;
+                this.markers[0].position.lat = this.form.latitude;
+                this.markers[0].position.lng = this.form.longitude;
+                this.getFuelTypes().then(() => {
+                    this.fuel_types = this.fuelTypesGetter();
+                    this.fuel_types.map((type, index) => {
+                        let myType = this.form.fuel_types.find(function (item) {
+                            return item.fuel_type_id === type.id;
+                        });
+                        if (myType) {
+                            this.fuel_types[index].price = myType.price;
+                        }
+                    });
+                });
+            });
         },
         methods: {
             ...mapActions([
                 'getStreet',
                 'getFuelTypes',
-                'createPlace'
+                'getPlace',
+                'editPlace'
             ]),
             ...mapGetters({
                 streetGetter: 'getStreet',
-                fuelTypesGetter: 'getFuelTypes'
+                fuelTypesGetter: 'getFuelTypes',
+                placeGetter: 'getPlace',
             }),
             updateCoordinates(location) {
                 this.form.latitude = location.latLng.lat();
                 this.form.longitude = location.latLng.lng();
-                this.markers[0].position.lat = this.form.latitude;
-                this.markers[0].position.lng = this.form.longitude;
+                this.markers[0].position.lat =  this.form.latitude;
+                this.markers[0].position.lng =  this.form.longitude;
                 this.center.lat = this.form.latitude;
-                this.center.lng = this.form.longitude;
+                this.center.lng =  this.form.longitude;
                 this.getStreet(this.markers[0].position);
             },
             handleCoordinateChange() {
-                console.log(isNaN(parseFloat(this.markers[0].position.lat)));
                 this.markers[0].position.lat = isNaN(parseFloat(this.markers[0].position.lat)) ? 0 : parseFloat(this.markers[0].position.lat);
                 this.markers[0].position.lng = isNaN(parseFloat(this.markers[0].position.lng)) ? 0 : parseFloat(this.markers[0].position.lng);
                 this.form.latitude = parseFloat(this.markers[0].position.lat);
@@ -204,14 +222,14 @@
                 }
             },
             handleSubmit() {
-                this.loading = true;
-                this.errors = {};
+                this.loading=true;
+                this.errors={};
                 this.form.fuel_types = this.fuel_types;
-                this.createPlace({form: this.form}).then((res) => {
-                    this.loading = false;
+                this.editPlace({id: this.id, form: this.form}).then(() => {
+                    this.loading=false;
                 }).catch((errors) => {
                     this.errors = errors;
-                    this.loading = false;
+                    this.loading=false;
                 });
             }
         }
