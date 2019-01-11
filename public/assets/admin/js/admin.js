@@ -1919,6 +1919,8 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       }).then(function (res) {
         _this.loading = false;
         localStorage.setItem('locus_token', res.access_token);
+
+        _this.$router.push('/places');
       }).catch(function () {
         _this.error = true;
         _this.loading = false;
@@ -2197,6 +2199,8 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
         form: this.form
       }).then(function (res) {
         _this2.loading = false;
+
+        _this2.$router.push('/places');
       }).catch(function (errors) {
         _this2.errors = errors;
         _this2.loading = false;
@@ -2567,7 +2571,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       page: 1,
       loading: false,
       form: {
-        keyword: null
+        keyword: ""
       }
     };
   },
@@ -2750,7 +2754,7 @@ exports = module.exports = __webpack_require__(/*! ../../../../../node_modules/c
 
 
 // module
-exports.push([module.i, "\n.search-input[data-v-b6e302c8] {\n    float: left;\n}\n.search-btn[data-v-b6e302c8] {\n    float: right;\n    /*margin-left: 10px;*/\n}\n.create-btn[data-v-b6e302c8] {\n    float: right;\n}\n", ""]);
+exports.push([module.i, "\n.search-input[data-v-b6e302c8] {\n    float: left;\n}\n.search-btn[data-v-b6e302c8] {\n    float: right;\n}\n.create-btn[data-v-b6e302c8] {\n    float: right;\n}\n.search-form[data-v-b6e302c8] {\n    float: left;\n    padding: 0;\n}\n.search-form-row[data-v-b6e302c8] {\n    margin-right: 0 !important;\n}\n.search-block[data-v-b6e302c8] {\n    padding: 0 0 !important;\n}\n", ""]);
 
 // exports
 
@@ -14748,6 +14752,7 @@ var render = function() {
               _c(
                 "form",
                 {
+                  staticClass: "mb-4 search-form col-md-12",
                   on: {
                     submit: function($event) {
                       $event.preventDefault()
@@ -14756,46 +14761,50 @@ var render = function() {
                   }
                 },
                 [
-                  _c("div", { staticClass: "form-row" }, [
-                    _c("div", { staticClass: "col-12 col-md-12 mb-3" }, [
-                      _c("input", {
-                        directives: [
-                          {
-                            name: "model",
-                            rawName: "v-model",
-                            value: _vm.form.keyword,
-                            expression: "form.keyword"
-                          }
-                        ],
-                        staticClass: "form-control col-md-11 search-input",
-                        attrs: {
-                          type: "text",
-                          placeholder: "Search by Name or Street"
-                        },
-                        domProps: { value: _vm.form.keyword },
-                        on: {
-                          input: function($event) {
-                            if ($event.target.composing) {
-                              return
+                  _c("div", { staticClass: "search-form-row" }, [
+                    _c(
+                      "div",
+                      { staticClass: "col-12 col-md-12 mb-3 search-block" },
+                      [
+                        _c("input", {
+                          directives: [
+                            {
+                              name: "model",
+                              rawName: "v-model",
+                              value: _vm.form.keyword,
+                              expression: "form.keyword"
                             }
-                            _vm.$set(_vm.form, "keyword", $event.target.value)
+                          ],
+                          staticClass: "form-control col-md-11 search-input",
+                          attrs: {
+                            type: "text",
+                            placeholder: "Search by Name or Street"
+                          },
+                          domProps: { value: _vm.form.keyword },
+                          on: {
+                            input: function($event) {
+                              if ($event.target.composing) {
+                                return
+                              }
+                              _vm.$set(_vm.form, "keyword", $event.target.value)
+                            }
                           }
-                        }
-                      }),
-                      _vm._v(" "),
-                      _c(
-                        "button",
-                        {
-                          staticClass: "btn btn-primary search-btn",
-                          attrs: { type: "submit", disabled: _vm.loading }
-                        },
-                        [
-                          _vm._v(
-                            "\n                                    Search\n                                "
-                          )
-                        ]
-                      )
-                    ])
+                        }),
+                        _vm._v(" "),
+                        _c(
+                          "button",
+                          {
+                            staticClass: "btn btn-primary search-btn",
+                            attrs: { type: "submit", disabled: _vm.loading }
+                          },
+                          [
+                            _vm._v(
+                              "\n                                    Search\n                                "
+                            )
+                          ]
+                        )
+                      ]
+                    )
                   ])
                 ]
               ),
@@ -32267,12 +32276,9 @@ vue__WEBPACK_IMPORTED_MODULE_2___default.a.use(vue2_google_maps__WEBPACK_IMPORTE
     libraries: 'places'
   }
 });
-var router = new vue_router__WEBPACK_IMPORTED_MODULE_3__["default"]({
-  routes: _routes__WEBPACK_IMPORTED_MODULE_1__["routes"]
-});
 new vue__WEBPACK_IMPORTED_MODULE_2___default.a({
   el: '#admin',
-  router: router,
+  router: _routes__WEBPACK_IMPORTED_MODULE_1__["router"],
   store: _store_store__WEBPACK_IMPORTED_MODULE_4__["default"],
   render: function render(h) {
     return h(_components_AdminComponent__WEBPACK_IMPORTED_MODULE_0__["default"]);
@@ -32877,16 +32883,19 @@ __webpack_require__.r(__webpack_exports__);
 /*!**************************************!*\
   !*** ./resources/admin/js/routes.js ***!
   \**************************************/
-/*! exports provided: routes */
+/*! exports provided: routes, router */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "routes", function() { return routes; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "router", function() { return router; });
 /* harmony import */ var _components_auth_LoginComponent__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./components/auth/LoginComponent */ "./resources/admin/js/components/auth/LoginComponent.vue");
 /* harmony import */ var _components_place_CreateComponent__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./components/place/CreateComponent */ "./resources/admin/js/components/place/CreateComponent.vue");
 /* harmony import */ var _components_place_EditComponent__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./components/place/EditComponent */ "./resources/admin/js/components/place/EditComponent.vue");
 /* harmony import */ var _components_place_ListComponent__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./components/place/ListComponent */ "./resources/admin/js/components/place/ListComponent.vue");
+/* harmony import */ var vue_router__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! vue-router */ "./node_modules/vue-router/dist/vue-router.esm.js");
+
 
 
 
@@ -32896,14 +32905,32 @@ var routes = [{
   component: _components_auth_LoginComponent__WEBPACK_IMPORTED_MODULE_0__["default"]
 }, {
   path: '/places',
-  component: _components_place_ListComponent__WEBPACK_IMPORTED_MODULE_3__["default"]
+  component: _components_place_ListComponent__WEBPACK_IMPORTED_MODULE_3__["default"],
+  meta: {
+    requiresAuth: true
+  }
 }, {
   path: '/place/create',
-  component: _components_place_CreateComponent__WEBPACK_IMPORTED_MODULE_1__["default"]
+  component: _components_place_CreateComponent__WEBPACK_IMPORTED_MODULE_1__["default"],
+  meta: {
+    requiresAuth: true
+  }
 }, {
   path: '/place/edit/:id',
-  component: _components_place_EditComponent__WEBPACK_IMPORTED_MODULE_2__["default"]
+  component: _components_place_EditComponent__WEBPACK_IMPORTED_MODULE_2__["default"],
+  meta: {
+    requiresAuth: true
+  }
 }];
+var router = new vue_router__WEBPACK_IMPORTED_MODULE_4__["default"]({
+  routes: routes
+});
+router.beforeEach(function (to, from, next) {
+  var requiresAuth = to.matched.some(function (record) {
+    return record.meta.requiresAuth;
+  });
+  if (!localStorage.getItem('locus_token') && requiresAuth) next('/');else next();
+});
 
 /***/ }),
 

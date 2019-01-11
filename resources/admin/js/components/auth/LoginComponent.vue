@@ -66,6 +66,7 @@
                 this.login({form: this.form}).then((res) => {
                     this.loading = false;
                     localStorage.setItem('locus_token', res.access_token);
+                    this.$router.push('/places');
                 }).catch(() => {
                     this.error = true;
                     this.loading = false;

@@ -194,7 +194,7 @@
                 let reader = new FileReader();
                 let form = this.form;
                 reader.addEventListener("load", function () {
-                    if(file.type==='image/jpg' || file.type==='image/jpeg' || file.type==='image/png') {
+                    if (file.type === 'image/jpg' || file.type === 'image/jpeg' || file.type === 'image/png') {
                         form.photo = reader.result;
                         form.photoPath = reader.result;
                     }
@@ -209,6 +209,7 @@
                 this.form.fuel_types = this.fuel_types;
                 this.createPlace({form: this.form}).then((res) => {
                     this.loading = false;
+                    this.$router.push('/places');
                 }).catch((errors) => {
                     this.errors = errors;
                     this.loading = false;

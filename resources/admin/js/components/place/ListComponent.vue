@@ -12,9 +12,9 @@
                 <div class="card-body">
                     <router-link to="/place/create" class="btn btn-success create-btn mb-4">Create</router-link>
                     <div class="table-responsive">
-                        <form v-on:submit.prevent="handleSearch">
-                            <div class="form-row">
-                                <div class="col-12 col-md-12 mb-3">
+                        <form v-on:submit.prevent="handleSearch" class="mb-4 search-form col-md-12">
+                            <div class="search-form-row">
+                                <div class="col-12 col-md-12 mb-3 search-block">
                                     <input type="text" class="form-control col-md-11 search-input"
                                            placeholder="Search by Name or Street" v-model="form.keyword">
                                     <button type="submit" class="btn btn-primary search-btn" :disabled="loading">
@@ -72,7 +72,7 @@
                 page: 1,
                 loading: false,
                 form: {
-                    keyword: null
+                    keyword: ""
                 }
             }
         },
@@ -131,7 +131,7 @@
             },
             handleSearch() {
                 this.loading = true;
-                this.setKeyword({keyword:this.form.keyword}).then(()=>{
+                this.setKeyword({keyword: this.form.keyword}).then(() => {
                     this.changePage(1).then(() => {
                         this.getPlaces(this.page).then(() => {
                             this.loading = false;
@@ -151,10 +151,22 @@
 
     .search-btn {
         float: right;
-        /*margin-left: 10px;*/
     }
 
     .create-btn {
         float: right;
+    }
+
+    .search-form {
+        float: left;
+        padding: 0;
+    }
+
+    .search-form-row {
+        margin-right: 0 !important;
+    }
+
+    .search-block {
+        padding: 0 0 !important;
     }
 </style>

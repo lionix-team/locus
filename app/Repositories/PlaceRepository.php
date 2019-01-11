@@ -39,7 +39,7 @@ class PlaceRepository extends Repository
             $records = $records->where(function ($query) use ($keyword) {
                 /** @var \Eloquent $query */
                 $query->where('name', 'LIKE', '%' . $keyword . '%');
-                $query->orWhere('name', 'LIKE', '%' . $keyword . '%');
+                $query->orWhere('street', 'LIKE', '%' . $keyword . '%');
             });
         }
         if ($orderDesc) {

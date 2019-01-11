@@ -1,5 +1,5 @@
 import AdminComponent from './components/AdminComponent'
-import {routes} from './routes'
+import {router} from './routes'
 import Vue from 'vue'
 import VueRouter from 'vue-router'
 import store from './store/store'
@@ -13,9 +13,7 @@ Vue.use(VueGoogleMaps, {
         libraries: 'places'
     }
 });
-const router = new VueRouter({
-    routes
-});
+
 new Vue({
     el: '#admin',
     router,
