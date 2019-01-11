@@ -1,4 +1,4 @@
-import {SET_STREET,SET_PLACE} from "./constants";
+import {SET_STREET,SET_PLACE,SET_PLACES} from "./constants";
 
 export const mutations = {
     [SET_STREET](state, payload) {

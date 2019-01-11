@@ -6,8 +6,8 @@ use App\Helpers\StatusCodeHelper;
 use App\Http\Resources\PlaceResource;
 use App\Models\Place;
 use App\Repositories\PlaceRepository;
-use App\Services\PlaceService;
 use App\Http\Controllers\Controller;
+use Illuminate\Http\Request;
 use Response;
 
 class PlaceController extends Controller
@@ -27,9 +27,9 @@ class PlaceController extends Controller
         $this->repository = $repository;
     }
 
-    public function index()
+    public function index(Request $request)
     {
-        $places = $this->repository->all();
+        $places = $this->repository->all($request->get('page'), true);
         $this->data['places'] = $places;
         $this->statusCode = StatusCodeHelper::HTTP_OK;
         $this->success = true;

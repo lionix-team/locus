@@ -22,4 +22,10 @@ class PlaceFuelType extends Model
 {
     protected $table = 'place_fuel_type';
     protected $fillable = ['place_id', 'fuel_type_id', 'price'];
+    protected $with = ['fuelType'];
+
+    public function fuelType()
+    {
+        return $this->belongsTo(FuelType::class, 'fuel_type_id', 'id');
+    }
 }

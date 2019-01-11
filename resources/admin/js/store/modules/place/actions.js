@@ -1,7 +1,7 @@
 import axios from 'axios';
 import admin from '../../../services/admin';
 import api from '../../../services/api';
-import {SET_STREET, SET_PLACE} from "./constants";
+import {SET_STREET, SET_PLACE,SET_PLACES} from "./constants";
 import {GOOGLE_API_BASE_URL, GOOGLE_MAP_KEY} from "../../../services/map";
 
 export const getStreet = (context, {lat, lng}) => {
@@ -26,10 +26,10 @@ export const createPlace = (context, {form}) => {
     });
 };
 
-export const getPlaces = (context, {id}) => {
+export const getPlaces = (context, page) => {
     return new Promise((resolve) => {
-        api().get('places/').then((res) => {
-            context.commit(SET_PLACEs, res.data.data.places);
+        api().get('places?page='+page).then((res) => {
+            context.commit(SET_PLACES, res.data.data.places);
             resolve();
         });
     });

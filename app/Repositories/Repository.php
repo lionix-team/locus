@@ -16,13 +16,24 @@ class Repository
     }
 
     /**
-     * Get all records
+     * Get records
      *
-     * @return \Eloquent[]|\Illuminate\Database\Eloquent\Collection
+     * @param bool $page
+     * @param bool $orderDesc
+     * @return \Eloquent|\Eloquent[]|\Illuminate\Contracts\Pagination\LengthAwarePaginator|\Illuminate\Database\Eloquent\Collection
      */
-    public function all()
+    public function all($page = false, $orderDesc = false)
     {
-        return $this->model->all();
+        $records = $this->model;
+        if ($orderDesc) {
+            $records = $records->orderBy('id', 'desc');
+        }
+        if ($page) {
+            $records = $records->paginate(20);
+        } else {
+            $records = $records->get();
+        }
+        return $records;
     }
 
     /**
