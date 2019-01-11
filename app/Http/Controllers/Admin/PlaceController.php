@@ -32,9 +32,10 @@ class PlaceController extends Controller
     }
 
     /**
-     * Create
+     * Create place
      *
      * @param CreateRequest $request
+     * @return mixed
      */
     public function create(CreateRequest $request)
     {
@@ -66,6 +67,13 @@ class PlaceController extends Controller
         return Response::api($this->success, $this->data, $this->errors, $this->statusCode);
     }
 
+    /**
+     * Edit place
+     *
+     * @param EditRequest $request
+     * @param Place $place
+     * @return mixed
+     */
     public function edit(EditRequest $request, Place $place)
     {
         $data = $request->except(['fuel_types']);
@@ -108,6 +116,22 @@ class PlaceController extends Controller
             $this->success = true;
             $this->statusCode = StatusCodeHelper::HTTP_OK;
             $this->data['place'] = new PlaceResource($model);
+        }
+        return Response::api($this->success, $this->data, $this->errors, $this->statusCode);
+    }
+
+    /**
+     * Delete place
+     *
+     * @param Place $place
+     * @return mixed
+     */
+    public function delete(Place $place)
+    {
+        $model = $this->repository->delete($place);
+        if ($model) {
+            $this->success = true;
+            $this->statusCode = StatusCodeHelper::HTTP_OK;
         }
         return Response::api($this->success, $this->data, $this->errors, $this->statusCode);
     }

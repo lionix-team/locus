@@ -19,10 +19,11 @@ class Repository
      * Get records
      *
      * @param bool $page
+     * @param int $limit
      * @param bool $orderDesc
      * @return \Eloquent|\Eloquent[]|\Illuminate\Contracts\Pagination\LengthAwarePaginator|\Illuminate\Database\Eloquent\Collection
      */
-    public function all($page = false, $orderDesc = false)
+    public function all($page = false,$limit=20, $orderDesc = false)
     {
         $records = $this->model;
         if ($orderDesc) {

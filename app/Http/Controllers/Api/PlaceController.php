@@ -29,7 +29,7 @@ class PlaceController extends Controller
 
     public function index(Request $request)
     {
-        $places = $this->repository->all($request->get('page'), true);
+        $places = $this->repository->getPlaces($request->get('page'), 20, true, $request->get('keyword'));
         $this->data['places'] = $places;
         $this->statusCode = StatusCodeHelper::HTTP_OK;
         $this->success = true;

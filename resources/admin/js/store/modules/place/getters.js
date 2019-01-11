@@ -7,3 +7,12 @@ export const getPlace = (state) => {
 export const getPlaces = (state) => {
     return state.places;
 };
+export const getPlacesData = (state) => {
+    return state.places.data;
+};
+export const getPage = (state) => {
+    return state.page;
+};
+export const getKeyword = (state) => {
+    return state.keyword;
+};

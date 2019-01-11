@@ -1,7 +1,7 @@
 import axios from 'axios';
 import admin from '../../../services/admin';
 import api from '../../../services/api';
-import {SET_STREET, SET_PLACE,SET_PLACES} from "./constants";
+import {SET_STREET, SET_PLACE, SET_PLACES, DELETE_PLACE, SET_PAGE,SET_KEYWORD} from "./constants";
 import {GOOGLE_API_BASE_URL, GOOGLE_MAP_KEY} from "../../../services/map";
 
 export const getStreet = (context, {lat, lng}) => {
@@ -26,12 +26,27 @@ export const createPlace = (context, {form}) => {
     });
 };
 
-export const getPlaces = (context, page) => {
+export const getPlaces = ({commit,state,dispatch}, page) => {
     return new Promise((resolve) => {
-        api().get('places?page='+page).then((res) => {
-            context.commit(SET_PLACES, res.data.data.places);
+        api().get('places?page=' + page + '&keyword=' + state.keyword).then((res) => {
+            dispatch('changePage',page);
+            commit(SET_PLACES, res.data.data.places);
             resolve();
         });
+    });
+};
+
+export const changePage = (context, page) => {
+    return new Promise((resolve) => {
+        context.commit(SET_PAGE, page);
+        resolve();
+    });
+};
+
+export const setKeyword = (context, {keyword}) => {
+    return new Promise((resolve) => {
+        context.commit(SET_KEYWORD, keyword);
+        resolve();
     });
 };
 
@@ -51,6 +66,17 @@ export const editPlace = (context, {form, id}) => {
             resolve();
         }).catch((errors) => {
             reject(errors.response.data.errors);
+        });
+    });
+};
+
+export const deletePlace = (context, {id}) => {
+    return new Promise((resolve, reject) => {
+        admin().delete('places/' + id).then(() => {
+            context.commit(DELETE_PLACE, {id: id});
+            resolve();
+        }).catch(() => {
+            reject();
         });
     });
 };

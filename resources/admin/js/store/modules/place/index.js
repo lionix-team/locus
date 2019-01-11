@@ -7,6 +7,8 @@ export default {
         street: {},
         place: {},
         places: {},
+        page: 1,
+        keyword: '',
     },
     mutations: mutations,
     getters: getters,

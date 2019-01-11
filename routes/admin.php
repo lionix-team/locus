@@ -6,4 +6,5 @@ Route::prefix('/auth')->group(function () {
 Route::prefix('places')->group(function () {
     Route::post('/', 'PlaceController@create');
     Route::put('{place}', 'PlaceController@edit');
+    Route::delete('{place}', 'PlaceController@delete');
 });
