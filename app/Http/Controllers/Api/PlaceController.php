@@ -27,6 +27,12 @@ class PlaceController extends Controller
         $this->repository = $repository;
     }
 
+    /**
+     * Get places
+     *
+     * @param Request $request
+     * @return mixed
+     */
     public function index(Request $request)
     {
         $places = $this->repository->getPlaces($request->get('page'), 20, true, $request->get('keyword'));
