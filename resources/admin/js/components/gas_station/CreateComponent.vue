@@ -66,7 +66,7 @@
                             </div>
                             <div class="col-12 col-md-12 mb-3">
                                 <label>Photo</label>
-                                <input type="file" @change="handleFileUpload">
+                                <input type="file" @change="handleFileUpload" class="form-control" :class="{'is-invalid':errors.photo}">
                                 <div class="invalid-feedback" v-if="errors.photo">
                                     {{errors.photo[0]}}
                                 </div>
@@ -197,7 +197,7 @@
                 this.form.fuel_types = this.fuel_types;
                 this.createPlace({form: this.form}).then(() => {
                     this.loading = false;
-                    this.$router.push('/places');
+                    this.$router.push('/gas-stations');
                 }).catch((errors) => {
                     this.errors = errors;
                     this.loading = false;

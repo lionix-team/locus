@@ -5,6 +5,7 @@ Route::prefix('/auth')->group(function () {
 });
 Route::middleware('auth:api')->group(function () {
     Route::prefix('places')->group(function () {
+        Route::get('/', 'PlaceController@index');
         Route::post('/', 'PlaceController@create');
         Route::put('{place}', 'PlaceController@edit');
         Route::delete('{place}', 'PlaceController@delete');

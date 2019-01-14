@@ -23,10 +23,25 @@ class PlaceFuelType extends Model
 {
     protected $table = 'place_fuel_type';
     protected $fillable = ['place_id', 'fuel_type_id', 'price'];
-    protected $with = ['fuelType'];
+    protected $with = ['fuel_type'];
 
-    public function fuelType()
+    /**
+     * Relationship for get place fuel type
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
+    public function fuel_type()
     {
         return $this->belongsTo(FuelType::class, 'fuel_type_id', 'id');
+    }
+
+    /**
+     * Relationship for get fuel type station
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\HasOne
+     */
+    public function gas_station()
+    {
+        return $this->hasOne(Place::class, 'id', 'place_id');
     }
 }

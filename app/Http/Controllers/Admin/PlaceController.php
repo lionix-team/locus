@@ -11,6 +11,7 @@ use App\Models\PlaceFuelType;
 use App\Repositories\PlaceFuelTypeRepository;
 use App\Repositories\PlaceRepository;
 use App\Http\Controllers\Controller;
+use Illuminate\Http\Request;
 use Response;
 use Storage;
 
@@ -29,6 +30,21 @@ class PlaceController extends Controller
         $this->data = [];
         $this->errors = [];
         $this->repository = new PlaceRepository();
+    }
+
+    /**
+     * Places list
+     *
+     * @param Request $request
+     * @return mixed
+     */
+    public function index(Request $request)
+    {
+        $places = $this->repository->filter($request->get('page'), 20, true, $request->get('keyword'));
+        $this->data['places'] = $places;
+        $this->statusCode = StatusCodeHelper::HTTP_OK;
+        $this->success = true;
+        return Response::api($this->success, $this->data, $this->errors, $this->statusCode);
     }
 
     /**

@@ -14,4 +14,5 @@ Route::prefix('places')->group(function () {
     Route::any('/', 'PlaceController@index');
     Route::get('/{place}', 'PlaceController@get');
 });
-Route::get('/fuel-types', 'FuelTypeController');
+Route::get('/fuel-types', 'FuelTypeController@index');
+Route::get('/fuel-types/{fuelType}', 'FuelTypeController@sort');

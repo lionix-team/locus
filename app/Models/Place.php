@@ -55,6 +55,6 @@ class Place extends Model
      */
     public function fuel_types()
     {
-        return $this->hasMany(PlaceFuelType::class, 'place_id', 'id')->orderBy('price','desc');
+        return $this->hasMany(PlaceFuelType::class, 'place_id', 'id');
     }
 }

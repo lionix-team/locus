@@ -1899,7 +1899,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
         _this.loading = false;
         localStorage.setItem('locus_token', res.access_token);
 
-        _this.$router.push('/gas_stations');
+        _this.$router.push('/gas-stations');
       }).catch(function () {
         _this.error = true;
         _this.loading = false;
@@ -2132,7 +2132,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       }).then(function () {
         _this3.loading = false;
 
-        _this3.$router.push('/places');
+        _this3.$router.push('/gas-stations');
       }).catch(function (errors) {
         _this3.errors = errors;
         _this3.loading = false;
@@ -13842,6 +13842,8 @@ var render = function() {
                     _c("label", [_vm._v("Photo")]),
                     _vm._v(" "),
                     _c("input", {
+                      staticClass: "form-control",
+                      class: { "is-invalid": _vm.errors.photo },
                       attrs: { type: "file" },
                       on: { change: _vm.handleFileUpload }
                     }),
@@ -14292,6 +14294,8 @@ var render = function() {
                     _c("label", [_vm._v("Photo")]),
                     _vm._v(" "),
                     _c("input", {
+                      staticClass: "form-control",
+                      class: { "is-invalid": _vm.errors.photo },
                       attrs: { type: "file" },
                       on: { change: _vm.handleFileUpload }
                     }),
@@ -33305,7 +33309,7 @@ var getPlaces = function getPlaces(_ref3, _ref4) {
   var page = _ref4.page,
       keyword = _ref4.keyword;
   return new Promise(function (resolve) {
-    Object(_services_api__WEBPACK_IMPORTED_MODULE_2__["default"])().get('places?page=' + page + '&keyword=' + keyword).then(function (res) {
+    Object(_services_admin__WEBPACK_IMPORTED_MODULE_1__["default"])().get('places?page=' + page + '&keyword=' + keyword).then(function (res) {
       dispatch('changePage', page);
       commit(_constants__WEBPACK_IMPORTED_MODULE_3__["SET_PLACES"], res.data.data.places);
       resolve();

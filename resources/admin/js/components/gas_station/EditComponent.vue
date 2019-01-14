@@ -68,7 +68,7 @@
                             </div>
                             <div class="col-12 col-md-12 mb-3">
                                 <label>Photo</label>
-                                <input type="file" @change="handleFileUpload">
+                                <input type="file" class="form-control" :class="{'is-invalid':errors.photo}" @change="handleFileUpload">
                                 <div class="invalid-feedback" v-if="errors.photo">
                                     {{errors.photo[0]}}
                                 </div>

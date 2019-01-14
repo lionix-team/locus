@@ -10,6 +10,7 @@ namespace App\Repositories;
 
 
 use App\Models\PlaceFuelType;
+use DB;
 use Illuminate\Database\Eloquent\Model;
 
 class PlaceFuelTypeRepository extends Repository
@@ -29,6 +30,17 @@ class PlaceFuelTypeRepository extends Repository
     public function getByPlaceIdAndFuelTypeId($placeId, $fuelTypeId)
     {
         return $this->model->where(['place_id' => $placeId, 'fuel_type_id' => $fuelTypeId])->first();
+    }
+
+    /**
+     * Sort gas stations fuel types by price
+     *
+     * @param $fuelTypeId
+     * @return \Eloquent[]|\Illuminate\Database\Eloquent\Collection
+     */
+    public function sortByPrice($fuelTypeId)
+    {
+        return $this->model->where(['fuel_type_id'=>$fuelTypeId])->orderBy('id','asc')->get();
     }
 
     /**
