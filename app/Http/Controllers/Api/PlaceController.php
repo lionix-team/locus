@@ -48,7 +48,7 @@ class PlaceController extends Controller
      * @param Place $place
      * @return mixed
      */
-    public function show(Place $place)
+    public function get(Place $place)
     {
         $this->statusCode = StatusCodeHelper::HTTP_OK;
         $this->data['place'] = new PlaceResource($place);

@@ -1,7 +1,7 @@
 import Vue from 'vue';
 import Vuex from 'vuex';
 import authModule from './modules/auth/index'
-import placeModule from './modules/place/index'
+import placeModule from './modules/gas_station/index'
 import fuelTypeModule from './modules/fuel_type/index'
 
 Vue.use(Vuex);

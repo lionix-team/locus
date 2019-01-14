@@ -6278,10 +6278,10 @@ vue-hot-reload-api@^2.3.0:
   resolved "https://registry.yarnpkg.com/vue-hot-reload-api/-/vue-hot-reload-api-2.3.1.tgz#b2d3d95402a811602380783ea4f566eb875569a2"
   integrity sha512-AA86yKZ5uOKz87/q1UpngEXhbRkaYg1b7HMMVRobNV1IVKqZe8oLIzo6iMocVwZXnYitlGwf2k4ZRLOZlS8oPQ==
 
-vue-laravel-paginex@^1.0.2:
-  version "1.0.2"
-  resolved "https://registry.yarnpkg.com/vue-laravel-paginex/-/vue-laravel-paginex-1.0.2.tgz#ca7b757ff2a078c288b82ebdb0e65ac4e65c4293"
-  integrity sha512-KS+hrfeka69n5agowxPmPhRQZk+rywlyY+pK00LJyIJO1tWZ+bmBNbJvsEhJhx7PGc5JX8GVKRqQ/xL3zu9hqA==
+vue-laravel-paginex@^1.1.1:
+  version "1.1.1"
+  resolved "https://registry.yarnpkg.com/vue-laravel-paginex/-/vue-laravel-paginex-1.1.1.tgz#d64c5817ec293adaeb73d17fdf8c071725d24f8e"
+  integrity sha512-ND3raw0ZH7fqdDVxuDFMPoxNmp0WHl0/OIp8c+BfcZ1WxDkuzTsz56ywM7l0sbsxyublE1C27IJmD4kdSMyfFA==
 
 vue-loader@^15.4.2:
   version "15.5.1"

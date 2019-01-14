@@ -1,7 +1,5 @@
 <?php
 
-use Illuminate\Http\Request;
-
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -14,6 +12,6 @@ use Illuminate\Http\Request;
 */
 Route::prefix('places')->group(function () {
     Route::get('/', 'PlaceController@index');
-    Route::get('/{place}', 'PlaceController@show');
+    Route::get('/{place}', 'PlaceController@get');
 });
 Route::get('/fuel-types', 'FuelTypeController');

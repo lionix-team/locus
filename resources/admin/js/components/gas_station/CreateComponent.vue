@@ -4,7 +4,7 @@
             <div class="header mt-md-6">
                 <div class="header-body">
                     <h1 class="header-title">
-                        Edit place
+                        Add new gas station
                     </h1>
                 </div>
             </div>
@@ -44,7 +44,7 @@
                             </div>
                             <gmap-map
                                 :center="center"
-                                :zoom="12"
+                                :zoom="15"
                                 id="map">
                                 <gmap-marker
                                     :key="index"
@@ -107,7 +107,7 @@
                                 </div>
                             </div>
                         </div>
-                        <button class="btn btn-primary" type="submit" :disabled="loading">Edit</button>
+                        <button class="btn btn-primary" type="submit" :disabled="loading">Create</button>
                     </form>
                 </div>
             </div>
@@ -118,12 +118,13 @@
 <script>
     import LoginnedLayout from '../layouts/LoginnedLayoutComponent'
     import {mapActions, mapGetters} from 'vuex'
+    import {generateHours} from '../../helpers/hours';
+    import {getImageBase64Code} from '../../helpers/upload';
 
     export default {
         components: {LoginnedLayout},
         data() {
             return {
-                id: this.$route.params['id'],
                 form: {
                     latitude: 40.0652158,
                     longitude: 43.9197151,
@@ -131,10 +132,10 @@
                     open_at: '',
                     close_at: '',
                     photo: null,
-                    photoPath: null,
+                    photoPath: null
                 },
                 fuel_types: [],
-                loading:false,
+                loading: false,
                 errors: {},
                 center: {
                     lat: 40.0652158,
@@ -147,56 +148,32 @@
             }
         },
         mounted() {
+            this.getFuelTypes().then(() => {
+                this.fuel_types = this.fuelTypesGetter();
+            });
             this.getStreet(this.center);
             this.$store.watch(this.streetGetter, street => {
                 this.form.street = street;
             });
-            for (let i = 0; i <= 24; i++) {
-                let hour = i + ':00';
-                if (i < 10) {
-                    hour = '0' + hour;
-                }
-                this.hours.push(hour);
-            }
-            this.getPlace({id: this.id}).then(() => {
-                this.form = this.placeGetter();
-                this.form.photo="";
-                this.center.lat = this.form.latitude;
-                this.center.lng = this.form.longitude;
-                this.markers[0].position.lat = this.form.latitude;
-                this.markers[0].position.lng = this.form.longitude;
-                this.getFuelTypes().then(() => {
-                    this.fuel_types = this.fuelTypesGetter();
-                    this.fuel_types.map((type, index) => {
-                        let myType = this.form.fuel_types.find(function (item) {
-                            return item.fuel_type_id === type.id;
-                        });
-                        if (myType) {
-                            this.fuel_types[index].price = myType.price;
-                        }
-                    });
-                });
-            });
+            this.hours = generateHours();
         },
         methods: {
             ...mapActions([
                 'getStreet',
                 'getFuelTypes',
-                'getPlace',
-                'editPlace'
+                'createPlace'
             ]),
             ...mapGetters({
                 streetGetter: 'getStreet',
-                fuelTypesGetter: 'getFuelTypes',
-                placeGetter: 'getPlace',
+                fuelTypesGetter: 'getFuelTypes'
             }),
             updateCoordinates(location) {
                 this.form.latitude = location.latLng.lat();
                 this.form.longitude = location.latLng.lng();
-                this.markers[0].position.lat =  this.form.latitude;
-                this.markers[0].position.lng =  this.form.longitude;
+                this.markers[0].position.lat = this.form.latitude;
+                this.markers[0].position.lng = this.form.longitude;
                 this.center.lat = this.form.latitude;
-                this.center.lng =  this.form.longitude;
+                this.center.lng = this.form.longitude;
                 this.getStreet(this.markers[0].position);
             },
             handleCoordinateChange() {
@@ -209,27 +186,21 @@
             },
             handleFileUpload(e) {
                 let file = e.target.files[0];
-                let reader = new FileReader();
-                let form = this.form;
-                reader.addEventListener("load", function () {
-                    if(file.type==='image/jpg' || file.type==='image/jpeg' || file.type==='image/png') {
-                        form.photo = reader.result;
-                        form.photoPath = reader.result;
-                    }
-                }, false);
-                if (file) {
-                    reader.readAsDataURL(file);
-                }
+                getImageBase64Code(file).then((code) => {
+                    this.form.photo = code;
+                    this.form.photoPath = code;
+                });
             },
             handleSubmit() {
-                this.loading=true;
-                this.errors={};
+                this.loading = true;
+                this.errors = {};
                 this.form.fuel_types = this.fuel_types;
-                this.editPlace({id: this.id, form: this.form}).then(() => {
-                    this.loading=false;
+                this.createPlace({form: this.form}).then(() => {
+                    this.loading = false;
+                    this.$router.push('/places');
                 }).catch((errors) => {
                     this.errors = errors;
-                    this.loading=false;
+                    this.loading = false;
                 });
             }
         }

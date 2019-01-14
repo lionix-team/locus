@@ -25,7 +25,7 @@ class PlaceResource extends JsonResource
             'longitude' => $place->longitude,
             'street' => $place->street,
             'photo' => $place->photo,
-            'photoPath' => asset('/storage/places/' . $place->photo),
+            'photoPath' => $place->photo ? asset('/storage/places/' . $place->photo) : null,
             'open_at' => $place->open_at ? Carbon::parse($place->open_at)->format('H:i') : '',
             'close_at' => $place->close_at ? Carbon::parse($place->close_at)->format('H:i') : '',
             'fuel_types' => $place->fuelTypes

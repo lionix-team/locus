@@ -66,7 +66,7 @@
                 this.login({form: this.form}).then((res) => {
                     this.loading = false;
                     localStorage.setItem('locus_token', res.access_token);
-                    this.$router.push('/places');
+                    this.$router.push('/gas_stations');
                 }).catch(() => {
                     this.error = true;
                     this.loading = false;

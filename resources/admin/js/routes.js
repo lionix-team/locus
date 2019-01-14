@@ -1,7 +1,7 @@
 import LoginComponent from "./components/auth/LoginComponent";
-import CreateComponent from "./components/place/CreateComponent";
-import EditComponent from "./components/place/EditComponent";
-import ListComponent from "./components/place/ListComponent";
+import CreateComponent from "./components/gas_station/CreateComponent";
+import EditComponent from "./components/gas_station/EditComponent";
+import ListComponent from "./components/gas_station/ListComponent";
 import VueRouter from 'vue-router'
 
 export const routes = [
@@ -9,19 +9,19 @@ export const routes = [
         path: '/', component: LoginComponent
     },
     {
-        path: '/places', component: ListComponent,
+        path: '/gas-stations', component: ListComponent,
         meta: {
             requiresAuth: true
         }
     },
     {
-        path: '/place/create', component: CreateComponent,
+        path: '/gas-station/create', component: CreateComponent,
         meta: {
             requiresAuth: true
         }
     },
     {
-        path: '/place/edit/:id', component: EditComponent,
+        path: '/gas-station/edit/:id', component: EditComponent,
         meta: {
             requiresAuth: true
         }

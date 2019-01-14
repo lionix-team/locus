@@ -26,9 +26,9 @@ export const createPlace = (context, {form}) => {
     });
 };
 
-export const getPlaces = ({commit,state,dispatch}, page) => {
+export const getPlaces = ({commit,dispatch}, {page,keyword}) => {
     return new Promise((resolve) => {
-        api().get('places?page=' + page + '&keyword=' + state.keyword).then((res) => {
+        api().get('places?page=' + page + '&keyword=' + keyword).then((res) => {
             dispatch('changePage',page);
             commit(SET_PLACES, res.data.data.places);
             resolve();

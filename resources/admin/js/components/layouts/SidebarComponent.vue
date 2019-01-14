@@ -20,7 +20,7 @@
                     <!-- Navigation -->
                     <ul class="navbar-nav">
                         <li class="nav-item">
-                            <router-link to="/places" class="nav-link">Dashboards</router-link>
+                            <router-link to="/gas-stations" class="nav-link">Gas Stations</router-link>
                         </li>
                     </ul>
 

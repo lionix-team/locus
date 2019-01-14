@@ -4,13 +4,13 @@
             <div class="header md-6">
                 <div class="header-body">
                     <h1 class="header-title">
-                        Places
+                        Gas Stations
                     </h1>
                 </div>
             </div>
             <div class="card">
                 <div class="card-body">
-                    <router-link to="/place/create" class="btn btn-success create-btn mb-4">Create</router-link>
+                    <router-link to="/gas-station/create" class="btn btn-success create-btn mb-4">Create</router-link>
                     <div class="table-responsive">
                         <form v-on:submit.prevent="handleSearch" class="mb-4 search-form col-md-12">
                             <div class="search-form-row">
@@ -42,7 +42,7 @@
                                     </p>
                                 </td>
                                 <td>
-                                    <router-link :to="{path:'/place/edit/'+place.id}" class="btn btn-primary">Edit
+                                    <router-link :to="{path:'/gas-station/edit/'+place.id}" class="btn btn-primary">Edit
                                     </router-link>
                                     <button class="btn btn-danger" @click="deleteItem(place.id)">Delete</button>
                                 </td>
@@ -50,7 +50,7 @@
                             </tbody>
                         </table>
                     </div>
-                    <Pagination :changePage="getPlaces" :data="places"/>
+                    <Pagination :changePage="getPlaces" :data="places" :requestParams="paginationParams"/>
                 </div>
             </div>
         </div>
@@ -77,7 +77,7 @@
             }
         },
         mounted() {
-            this.getPlaces(1).then(() => {
+            this.getPlaces(this.paginationParams()).then(() => {
                 this.places = this.placesGetter();
                 this.list = this.getPlacesData();
             });
@@ -89,9 +89,6 @@
             });
             this.$store.watch(this.getPage, page => {
                 this.page = page;
-            });
-            this.$store.watch(this.getKeyword, keyword => {
-                this.form.keyword = keyword;
             });
         },
         methods: {
@@ -123,7 +120,7 @@
                                         this.places = this.getPlaces(this.page);
                                     });
                                 } else {
-                                    this.places = this.getPlaces(this.page);
+                                    this.places = this.getPlaces({page:this.page});
                                 }
                             });
                         }
@@ -131,15 +128,19 @@
             },
             handleSearch() {
                 this.loading = true;
-                this.setKeyword({keyword: this.form.keyword}).then(() => {
-                    this.changePage(1).then(() => {
-                        this.getPlaces(this.page).then(() => {
-                            this.loading = false;
-                        }).catch(() => {
-                            this.loading = false;
-                        });
+                this.changePage(1).then(() => {
+                    this.getPlaces(this.paginationParams()).then(() => {
+                        this.loading = false;
+                    }).catch(() => {
+                        this.loading = false;
                     });
                 });
+            },
+            paginationParams() {
+                return {
+                    keyword: this.form.keyword,
+                    page:this.page
+                }
             }
         }
     }

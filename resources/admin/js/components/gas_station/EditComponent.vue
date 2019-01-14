@@ -4,14 +4,16 @@
             <div class="header mt-md-6">
                 <div class="header-body">
                     <h1 class="header-title">
-                        Create place
+                        Edit gas station
                     </h1>
                 </div>
             </div>
             <div class="card col-md-12">
                 <div class="card-body">
-
                     <form v-on:submit.prevent="handleSubmit">
+                        <div class="alert alert-success alert-dismissible" role="alert" v-if="successed">
+                            <strong>Place successfully edited!</strong>
+                        </div>
                         <div class="form-row">
                             <div class="col-12 col-md-12 mb-3">
                                 <label>Name</label>
@@ -44,7 +46,7 @@
                             </div>
                             <gmap-map
                                 :center="center"
-                                :zoom="12"
+                                :zoom="15"
                                 id="map">
                                 <gmap-marker
                                     :key="index"
@@ -71,7 +73,7 @@
                                     {{errors.photo[0]}}
                                 </div>
                             </div>
-                            <div class="col-12 col-md-12 mb-3">
+                            <div class="col-12 col-md-12 mb-3" v-if="form.photoPath">
                                 <img :src="form.photoPath" v-if="form.photoPath"/>
                             </div>
                             <div class="col-12 col-md-6 mb-3">
@@ -107,7 +109,7 @@
                                 </div>
                             </div>
                         </div>
-                        <button class="btn btn-primary" type="submit" :disabled="loading">Create</button>
+                        <button class="btn btn-primary" type="submit" :disabled="loading">Edit</button>
                     </form>
                 </div>
             </div>
@@ -118,11 +120,14 @@
 <script>
     import LoginnedLayout from '../layouts/LoginnedLayoutComponent'
     import {mapActions, mapGetters} from 'vuex'
+    import {generateHours} from '../../helpers/hours'
+    import {getImageBase64Code} from '../../helpers/upload'
 
     export default {
         components: {LoginnedLayout},
         data() {
             return {
+                id: this.$route.params['id'],
                 form: {
                     latitude: 40.0652158,
                     longitude: 43.9197151,
@@ -130,10 +135,11 @@
                     open_at: '',
                     close_at: '',
                     photo: null,
-                    photoPath: null
+                    photoPath: null,
                 },
                 fuel_types: [],
                 loading: false,
+                successed: false,
                 errors: {},
                 center: {
                     lat: 40.0652158,
@@ -146,30 +152,43 @@
             }
         },
         mounted() {
-            this.getFuelTypes().then(() => {
-                this.fuel_types = this.fuelTypesGetter();
-            });
             this.getStreet(this.center);
             this.$store.watch(this.streetGetter, street => {
                 this.form.street = street;
             });
-            for (let i = 0; i <= 24; i++) {
-                let hour = i + ':00';
-                if (i < 10) {
-                    hour = '0' + hour;
-                }
-                this.hours.push(hour);
-            }
+            this.hours = generateHours();
+
+            this.getPlace({id: this.id}).then(() => {
+                this.form = this.placeGetter();
+                this.form.photo = "";
+                this.center.lat = this.form.latitude;
+                this.center.lng = this.form.longitude;
+                this.markers[0].position.lat = this.form.latitude;
+                this.markers[0].position.lng = this.form.longitude;
+                this.getFuelTypes().then(() => {
+                    this.fuel_types = this.fuelTypesGetter();
+                    this.fuel_types.map((type, index) => {
+                        let myType = this.form.fuel_types.find(function (item) {
+                            return item.fuel_type_id === type.id;
+                        });
+                        if (myType) {
+                            this.fuel_types[index].price = myType.price;
+                        }
+                    });
+                });
+            });
         },
         methods: {
             ...mapActions([
                 'getStreet',
                 'getFuelTypes',
-                'createPlace'
+                'getPlace',
+                'editPlace'
             ]),
             ...mapGetters({
                 streetGetter: 'getStreet',
-                fuelTypesGetter: 'getFuelTypes'
+                fuelTypesGetter: 'getFuelTypes',
+                placeGetter: 'getPlace',
             }),
             updateCoordinates(location) {
                 this.form.latitude = location.latLng.lat();
@@ -181,7 +200,6 @@
                 this.getStreet(this.markers[0].position);
             },
             handleCoordinateChange() {
-                console.log(isNaN(parseFloat(this.markers[0].position.lat)));
                 this.markers[0].position.lat = isNaN(parseFloat(this.markers[0].position.lat)) ? 0 : parseFloat(this.markers[0].position.lat);
                 this.markers[0].position.lng = isNaN(parseFloat(this.markers[0].position.lng)) ? 0 : parseFloat(this.markers[0].position.lng);
                 this.form.latitude = parseFloat(this.markers[0].position.lat);
@@ -191,25 +209,19 @@
             },
             handleFileUpload(e) {
                 let file = e.target.files[0];
-                let reader = new FileReader();
-                let form = this.form;
-                reader.addEventListener("load", function () {
-                    if (file.type === 'image/jpg' || file.type === 'image/jpeg' || file.type === 'image/png') {
-                        form.photo = reader.result;
-                        form.photoPath = reader.result;
-                    }
-                }, false);
-                if (file) {
-                    reader.readAsDataURL(file);
-                }
+                getImageBase64Code(file).then((code) => {
+                    this.form.photo = code;
+                    this.form.photoPath = code;
+                });
             },
             handleSubmit() {
                 this.loading = true;
+                this.successed = false;
                 this.errors = {};
                 this.form.fuel_types = this.fuel_types;
-                this.createPlace({form: this.form}).then((res) => {
+                this.editPlace({id: this.id, form: this.form}).then(() => {
                     this.loading = false;
-                    this.$router.push('/places');
+                    this.successed = true;
                 }).catch((errors) => {
                     this.errors = errors;
                     this.loading = false;
