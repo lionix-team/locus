@@ -11,7 +11,7 @@
 |
 */
 Route::prefix('places')->group(function () {
-    Route::get('/', 'PlaceController@index');
+    Route::any('/', 'PlaceController@index');
     Route::get('/{place}', 'PlaceController@get');
 });
 Route::get('/fuel-types', 'FuelTypeController');

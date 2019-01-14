@@ -4,6 +4,9 @@ namespace App\Http\Controllers\Api;
 
 use App\Helpers\StatusCodeHelper;
 use App\Http\Resources\PlaceResource;
+use App\Http\Resources\PlacesCollection;
+use App\Http\Resources\UserCollection;
+use App\Http\Resources\UserResource;
 use App\Models\Place;
 use App\Repositories\PlaceRepository;
 use App\Http\Controllers\Controller;
@@ -35,8 +38,9 @@ class PlaceController extends Controller
      */
     public function index(Request $request)
     {
-        $places = $this->repository->getPlaces($request->get('page'), 20, true, $request->get('keyword'));
-        $this->data['places'] = $places;
+        $fuelTypes=$request->get('fuel_types') ? explode(',',$request->get('fuel_types')) : [];
+        $places = $this->repository->getPlaces($request->get('page'), 20, true, $request->get('keyword'),$fuelTypes);
+        $this->data['places'] = PlaceResource::collection($places);
         $this->statusCode = StatusCodeHelper::HTTP_OK;
         $this->success = true;
         return Response::api($this->success, $this->data, $this->errors, $this->statusCode);

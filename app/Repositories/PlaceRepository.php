@@ -3,7 +3,6 @@
 namespace App\Repositories;
 
 use App\Models\Place;
-use Illuminate\Database\Eloquent\Model;
 
 class PlaceRepository extends Repository
 {
@@ -30,11 +29,18 @@ class PlaceRepository extends Repository
      * @param int $limit
      * @param bool $orderDesc
      * @param string $keyword
-     * @return \Eloquent|\Eloquent[]|\Illuminate\Contracts\Pagination\LengthAwarePaginator|\Illuminate\Database\Eloquent\Collection
+     * @param array $fuelTypes
+     * @return \Eloquent|\Eloquent[]|\Illuminate\Contracts\Pagination\LengthAwarePaginator|\Illuminate\Database\Eloquent\Builder|\Illuminate\Database\Eloquent\Builder[]|\Illuminate\Database\Eloquent\Collection
      */
-    public function getPlaces($page = 0, $limit = 20, $orderDesc = false, $keyword = "")
+    public function getPlaces($page = 0, $limit = 20, $orderDesc = false, $keyword = "", $fuelTypes = [])
     {
         $records = $this->model;
+        if ($fuelTypes) {
+            $records = $records->whereHas('fuel_types', function ($query) use ($fuelTypes) {
+                /** @var \Eloquent $query */
+                $query->whereIn('fuel_type_id', $fuelTypes);
+            });
+        }
         if ($keyword) {
             $records = $records->where(function ($query) use ($keyword) {
                 /** @var \Eloquent $query */

@@ -25,12 +25,13 @@ use Illuminate\Database\Eloquent\Model;
  * @method static \Illuminate\Database\Eloquent\Builder|Place query()
  * @mixin \Eloquent
  * @property-read \Illuminate\Database\Eloquent\Collection|\App\Models\PlaceFuelType[] $fuelTypes
+ * @property-read \Illuminate\Database\Eloquent\Collection|\App\Models\PlaceFuelType[] $fuel_types
  */
 class Place extends Model
 {
     protected $table = 'places';
     protected $fillable = ['name', 'place_id', 'type', 'latitude', 'longitude', 'street', 'price', 'photo', 'open_at', 'close_at'];
-    protected $with = ['fuelTypes'];
+    protected $with = ['fuel_types'];
 
     //Place types
     const TYPE_GAS_STATION = 'gas_station';
@@ -52,8 +53,8 @@ class Place extends Model
      *
      * @return \Illuminate\Database\Eloquent\Relations\HasMany
      */
-    public function fuelTypes()
+    public function fuel_types()
     {
-        return $this->hasMany(PlaceFuelType::class, 'place_id', 'id');
+        return $this->hasMany(PlaceFuelType::class, 'place_id', 'id')->orderBy('price','desc');
     }
 }

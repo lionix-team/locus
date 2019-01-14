@@ -17,6 +17,7 @@ use Illuminate\Database\Eloquent\Model;
  * @method static \Illuminate\Database\Eloquent\Builder|PlaceFuelType newQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|PlaceFuelType query()
  * @mixin \Eloquent
+ * @property-read \App\Models\FuelType $fuelType
  */
 class PlaceFuelType extends Model
 {
