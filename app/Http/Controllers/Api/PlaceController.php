@@ -36,7 +36,7 @@ class PlaceController extends Controller
     public function index(Request $request)
     {
         $fuelTypes=$request->get('fuel_types') ? explode(',',$request->get('fuel_types')) : [];
-        $places = $this->repository->getPlaces($request->get('page'), 20, true, $request->get('keyword'),$fuelTypes);
+        $places = $this->repository->filter($request->get('page'), 20, true, $request->get('keyword'),$fuelTypes);
         $this->data['places'] = PlaceResource::collection($places);
         $this->statusCode = StatusCodeHelper::HTTP_OK;
         $this->success = true;

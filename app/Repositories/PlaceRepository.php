@@ -32,7 +32,7 @@ class PlaceRepository extends Repository
      * @param array $fuelTypes
      * @return \Eloquent|\Eloquent[]|\Illuminate\Contracts\Pagination\LengthAwarePaginator|\Illuminate\Database\Eloquent\Builder|\Illuminate\Database\Eloquent\Builder[]|\Illuminate\Database\Eloquent\Collection
      */
-    public function getPlaces($page = 0, $limit = 20, $orderDesc = false, $keyword = "", $fuelTypes = [])
+    public function filter($page = 0, $limit = 20, $orderDesc = false, $keyword = "", $fuelTypes = [])
     {
         $records = $this->model;
         if ($fuelTypes) {
