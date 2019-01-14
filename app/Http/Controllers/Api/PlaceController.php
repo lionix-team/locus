@@ -4,9 +4,6 @@ namespace App\Http\Controllers\Api;
 
 use App\Helpers\StatusCodeHelper;
 use App\Http\Resources\PlaceResource;
-use App\Http\Resources\PlacesCollection;
-use App\Http\Resources\UserCollection;
-use App\Http\Resources\UserResource;
 use App\Models\Place;
 use App\Repositories\PlaceRepository;
 use App\Http\Controllers\Controller;
