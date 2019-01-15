@@ -18,6 +18,8 @@ use Illuminate\Database\Eloquent\Model;
  * @method static \Illuminate\Database\Eloquent\Builder|PlaceFuelType query()
  * @mixin \Eloquent
  * @property-read \App\Models\FuelType $fuelType
+ * @property-read \App\Models\FuelType $fuel_type
+ * @property-read \App\Models\Place $gas_station
  */
 class PlaceFuelType extends Model
 {

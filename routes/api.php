@@ -13,6 +13,7 @@
 Route::prefix('places')->group(function () {
     Route::any('/', 'PlaceController@index');
     Route::get('/{place}', 'PlaceController@get');
+    Route::post('/{place}/review', 'ReviewController@create');
 });
 Route::get('/fuel-types', 'FuelTypeController@index');
 Route::get('/fuel-types/{fuelType}', 'FuelTypeController@sort');

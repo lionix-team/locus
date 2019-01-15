@@ -26,12 +26,13 @@ use Illuminate\Database\Eloquent\Model;
  * @mixin \Eloquent
  * @property-read \Illuminate\Database\Eloquent\Collection|\App\Models\PlaceFuelType[] $fuelTypes
  * @property-read \Illuminate\Database\Eloquent\Collection|\App\Models\PlaceFuelType[] $fuel_types
+ * @property-read \Illuminate\Database\Eloquent\Collection|\App\Models\Review[] $reviews
  */
 class Place extends Model
 {
     protected $table = 'places';
     protected $fillable = ['name', 'place_id', 'type', 'latitude', 'longitude', 'street', 'price', 'photo', 'open_at', 'close_at'];
-    protected $with = ['fuel_types'];
+    protected $with = ['fuel_types', 'reviews'];
 
     //Place types
     const TYPE_GAS_STATION = 'gas_station';
@@ -56,5 +57,15 @@ class Place extends Model
     public function fuel_types()
     {
         return $this->hasMany(PlaceFuelType::class, 'place_id', 'id');
+    }
+
+    /**
+     * Relationship for get place reviews
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function reviews()
+    {
+        return $this->hasMany(Review::class, 'place_id', 'id');
     }
 }
