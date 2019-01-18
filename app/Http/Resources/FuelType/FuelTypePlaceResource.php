@@ -1,11 +1,12 @@
 <?php
 
-namespace App\Http\Resources;
+namespace App\Http\Resources\FuelType;
 
+use App\Http\Resources\Place\PlaceResourceForFuelSort;
 use App\Models\PlaceFuelType;
 use Illuminate\Http\Resources\Json\JsonResource;
 
-class PlaceFuelTypeResource extends JsonResource
+class FuelTypePlaceResource extends JsonResource
 {
     /**
      * Transform the resource into an array.

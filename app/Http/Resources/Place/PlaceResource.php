@@ -1,7 +1,8 @@
 <?php
 
-namespace App\Http\Resources;
+namespace App\Http\Resources\Place;
 
+use App\Http\Resources\ReviewResource;
 use App\Models\Place;
 use App\Models\Review;
 use App\Services\PlaceService;
@@ -20,7 +21,7 @@ class PlaceResource extends JsonResource
     {
         /** @var Place $place */
         $place = $this;
-        $reviews = $place->reviews()->where(['status'=>Review::STATUS_ACCEPTED]);
+        $reviews = $place->reviews()->where(['status'=>Review::STATUS_APPROVED]);
         $reviewsCount = $reviews->count();
         $ratingSum = $reviews->sum('star');
         return [
@@ -33,8 +34,8 @@ class PlaceResource extends JsonResource
             'photoPath' => $place->photo ? asset('/storage/places/' . $place->photo) : null,
             'open_at' => $place->open_at ? Carbon::parse($place->open_at)->format('H:i') : '',
             'close_at' => $place->close_at ? Carbon::parse($place->close_at)->format('H:i') : '',
-            'far' => ($request['lat'] && $request['lng']) ? PlaceService::getDistanceBetweenTwoCoords($request['lat'], $request['lng'],
-                $place->latitude, $place->longitude) : false,
+            'far' => ($request['lat'] && $request['lng']) ? PlaceService::getDistanceBetweenTwoCoords($request['lat'],
+                $request['lng'],$place->latitude, $place->longitude) : false,
             'fuel_types' => $place->fuel_types,
             'star' => ($reviewsCount) ? round($ratingSum/$reviewsCount) : 0,
             'reviews' => ReviewResource::collection($reviews->get())

@@ -43,13 +43,6 @@ export const changePage = (context, page) => {
     });
 };
 
-export const setKeyword = (context, {keyword}) => {
-    return new Promise((resolve) => {
-        context.commit(SET_KEYWORD, keyword);
-        resolve();
-    });
-};
-
 export const getPlace = (context, {id}) => {
     return new Promise((resolve) => {
         api().get('places/' + id).then((res) => {

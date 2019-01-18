@@ -124,6 +124,7 @@
     import {getImageBase64Code} from '../../helpers/upload'
 
     export default {
+        name:"EditGasStationComponent",
         components: {LoginnedLayout},
         data() {
             return {

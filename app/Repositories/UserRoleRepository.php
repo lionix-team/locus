@@ -1,13 +1,6 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: Garik
- * Date: 10.01.2019
- * Time: 13:13
- */
 
 namespace App\Repositories;
-
 
 use App\Models\UserRole;
 

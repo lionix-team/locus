@@ -2,7 +2,6 @@
 
 namespace App\Repositories;
 
-
 use Illuminate\Database\Eloquent\Model;
 
 class Repository
@@ -21,16 +20,17 @@ class Repository
      * @param bool $page
      * @param int $limit
      * @param bool $orderDesc
-     * @return \Eloquent|\Eloquent[]|\Illuminate\Contracts\Pagination\LengthAwarePaginator|\Illuminate\Database\Eloquent\Collection
+     * @return \Eloquent|\Eloquent[]|\Illuminate\Contracts\Pagination\LengthAwarePaginator|\Illuminate\Database\
+     * Eloquent\Collection
      */
-    public function all($page = false,$limit=20, $orderDesc = false)
+    public function all($page = false, $limit = 20, $orderDesc = false)
     {
         $records = $this->model;
         if ($orderDesc) {
             $records = $records->orderBy('id', 'desc');
         }
         if ($page) {
-            $records = $records->paginate(20);
+            $records = $records->paginate($limit);
         } else {
             $records = $records->get();
         }

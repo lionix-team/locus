@@ -1,7 +1,8 @@
 import LoginComponent from "./components/auth/LoginComponent";
-import CreateComponent from "./components/gas_station/CreateComponent";
-import EditComponent from "./components/gas_station/EditComponent";
-import ListComponent from "./components/gas_station/ListComponent";
+import CreateGasStationComponent from "./components/gas_station/CreateComponent";
+import EditGasStationComponent from "./components/gas_station/EditComponent";
+import GasStationsListComponent from "./components/gas_station/ListComponent";
+import ReviewsListComponent from "./components/review/ListComponent";
 import VueRouter from 'vue-router'
 
 export const routes = [
@@ -9,19 +10,25 @@ export const routes = [
         path: '/', component: LoginComponent
     },
     {
-        path: '/gas-stations', component: ListComponent,
+        path: '/gas-stations', component: GasStationsListComponent,
         meta: {
             requiresAuth: true
         }
     },
     {
-        path: '/gas-station/create', component: CreateComponent,
+        path: '/gas-station/create', component: CreateGasStationComponent,
         meta: {
             requiresAuth: true
         }
     },
     {
-        path: '/gas-station/edit/:id', component: EditComponent,
+        path: '/gas-station/edit/:id', component: EditGasStationComponent,
+        meta: {
+            requiresAuth: true
+        }
+    },
+    {
+        path: '/reviews', component: ReviewsListComponent,
         meta: {
             requiresAuth: true
         }

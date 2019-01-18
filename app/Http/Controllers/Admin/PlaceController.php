@@ -5,7 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Helpers\StatusCodeHelper;
 use App\Http\Requests\Place\CreateRequest;
 use App\Http\Requests\Place\EditRequest;
-use App\Http\Resources\PlaceResource;
+use App\Http\Resources\Place\PlaceResource;
 use App\Models\Place;
 use App\Models\PlaceFuelType;
 use App\Repositories\PlaceFuelTypeRepository;
@@ -40,7 +40,7 @@ class PlaceController extends Controller
      */
     public function index(Request $request)
     {
-        $places = $this->repository->filter($request->get('page'), 20, true, $request->get('keyword'));
+        $places = $this->repository->filter(true, 20, true, $request->get('keyword'));
         $this->data['places'] = $places;
         $this->statusCode = StatusCodeHelper::HTTP_OK;
         $this->success = true;

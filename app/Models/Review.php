@@ -19,6 +19,7 @@ use Illuminate\Database\Eloquent\Model;
  * @method static \Illuminate\Database\Eloquent\Builder|Review newQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|Review query()
  * @mixin \Eloquent
+ * @property-read \App\Models\Place $place
  */
 class Review extends Model
 {
@@ -26,7 +27,17 @@ class Review extends Model
     protected $fillable = ["email", "text", "star"];
 
     //Review statuses
-    const STATUS_PENDING=0;
-    const STATUS_DECLINED=1;
-    const STATUS_ACCEPTED=2;
+    const STATUS_PENDING = 0;
+    const STATUS_DECLINED = 1;
+    const STATUS_APPROVED = 2;
+
+    /**
+     * Relationship for get review place
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
+    public function place()
+    {
+        return $this->belongsTo(Place::class, 'place_id', 'id');
+    }
 }

@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Resources;
+namespace App\Http\Resources\Place;
 
 use App\Models\Place;
 use App\Services\PlaceService;
@@ -29,8 +29,8 @@ class PlaceResourceForFuelSort extends JsonResource
             'photoPath' => $place->photo ? asset('/storage/places/' . $place->photo) : null,
             'open_at' => $place->open_at ? Carbon::parse($place->open_at)->format('H:i') : '',
             'close_at' => $place->close_at ? Carbon::parse($place->close_at)->format('H:i') : '',
-            'far' =>($request['lat'] && $request['lng']) ?PlaceService::getDistanceBetweenTwoCoords($request['lat'], $request['lng'],
-                $place->latitude, $place->longitude) : false,
+            'far' =>($request['lat'] && $request['lng']) ? PlaceService::getDistanceBetweenTwoCoords($request['lat'],
+                $request['lng'],$place->latitude, $place->longitude) : false,
         ];
     }
 }

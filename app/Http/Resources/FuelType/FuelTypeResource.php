@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Resources;
+namespace App\Http\Resources\FuelType;
 
 use App\Models\FuelType;
 use Illuminate\Http\Resources\Json\JsonResource;

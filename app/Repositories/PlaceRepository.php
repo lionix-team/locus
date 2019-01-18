@@ -23,16 +23,17 @@ class PlaceRepository extends Repository
     }
 
     /**
-     * Get places
+     * Filter places
      *
-     * @param int $page
+     * @param bool $pagination
      * @param int $limit
      * @param bool $orderDesc
      * @param string $keyword
      * @param array $fuelTypes
-     * @return \Eloquent|\Eloquent[]|\Illuminate\Contracts\Pagination\LengthAwarePaginator|\Illuminate\Database\Eloquent\Builder|\Illuminate\Database\Eloquent\Builder[]|\Illuminate\Database\Eloquent\Collection
+     * @return \Eloquent|\Eloquent[]|\Illuminate\Contracts\Pagination\LengthAwarePaginator|\Illuminate\Database\
+     * Eloquent\Builder|\Illuminate\Database\Eloquent\Builder[]|\Illuminate\Database\Eloquent\Collection
      */
-    public function filter($page = 0, $limit = 20, $orderDesc = false, $keyword = "", $fuelTypes = [])
+    public function filter($pagination = false, $limit = 20, $orderDesc = false, $keyword = "", $fuelTypes = [])
     {
         $records = $this->model;
         if ($fuelTypes) {
@@ -51,7 +52,7 @@ class PlaceRepository extends Repository
         if ($orderDesc) {
             $records = $records->orderBy('id', 'desc');
         }
-        if ($page) {
+        if ($pagination) {
             $records = $records->paginate($limit);
         } else {
             $records = $records->get();

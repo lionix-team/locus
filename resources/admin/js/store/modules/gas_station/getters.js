@@ -13,6 +13,3 @@ export const getPlacesData = (state) => {
 export const getPage = (state) => {
     return state.page;
 };
-export const getKeyword = (state) => {
-    return state.keyword;
-};

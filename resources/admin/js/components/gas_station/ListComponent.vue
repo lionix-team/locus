@@ -64,6 +64,7 @@
     import swal from 'sweetalert'
 
     export default {
+        name:"GasStationsListComponent",
         components: {LoginnedLayout, Pagination},
         data() {
             return {

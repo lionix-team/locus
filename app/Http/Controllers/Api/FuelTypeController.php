@@ -3,10 +3,9 @@
 namespace App\Http\Controllers\Api;
 
 use App\Helpers\StatusCodeHelper;
-use App\Http\Resources\FuelTypeResource;
-use App\Http\Resources\PlaceFuelTypeResource;
+use App\Http\Resources\FuelType\FuelTypeResource;
+use App\Http\Resources\FuelType\FuelTypePlaceResource;
 use App\Models\FuelType;
-use App\Models\PlaceFuelType;
 use App\Repositories\FuelTypeRepository;
 use App\Http\Controllers\Controller;
 use App\Repositories\PlaceFuelTypeRepository;
@@ -53,7 +52,7 @@ class FuelTypeController extends Controller
     public function sort(FuelType $fuelType)
     {
         $this->data['fuel_type'] = new FuelTypeResource($fuelType);
-        $this->data['stations'] = PlaceFuelTypeResource::collection($this->placeFuelTypeRepository
+        $this->data['stations'] = FuelTypePlaceResource::collection($this->placeFuelTypeRepository
             ->sortByPrice($fuelType->id));
         $this->success = true;
         $this->statusCode = StatusCodeHelper::HTTP_OK;

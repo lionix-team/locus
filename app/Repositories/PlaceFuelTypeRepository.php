@@ -1,17 +1,8 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: Garik
- * Date: 10.01.2019
- * Time: 22:32
- */
 
 namespace App\Repositories;
 
-
 use App\Models\PlaceFuelType;
-use DB;
-use Illuminate\Database\Eloquent\Model;
 
 class PlaceFuelTypeRepository extends Repository
 {
@@ -40,7 +31,7 @@ class PlaceFuelTypeRepository extends Repository
      */
     public function sortByPrice($fuelTypeId)
     {
-        return $this->model->where(['fuel_type_id'=>$fuelTypeId])->orderBy('id','asc')->get();
+        return $this->model->where(['fuel_type_id' => $fuelTypeId])->orderBy('id', 'asc')->get();
     }
 
     /**

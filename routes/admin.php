@@ -10,4 +10,9 @@ Route::middleware('auth:api')->group(function () {
         Route::put('{place}', 'PlaceController@edit');
         Route::delete('{place}', 'PlaceController@delete');
     });
+
+    Route::prefix('reviews')->group(function () {
+        Route::get('/', 'ReviewController@index');
+        Route::put('/{status}/{review}', 'ReviewController@changeStatus');
+    });
 });

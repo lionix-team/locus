@@ -122,6 +122,7 @@
     import {getImageBase64Code} from '../../helpers/upload';
 
     export default {
+        name:"CreateGasStationComponent",
         components: {LoginnedLayout},
         data() {
             return {

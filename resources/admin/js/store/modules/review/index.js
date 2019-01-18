@@ -4,10 +4,7 @@ import * as actions from './actions'
 
 export default {
     state: {
-        street: {},
-        place: {},
-        places: {},
-        page: 1
+        reviews: {}
     },
     mutations: mutations,
     getters: getters,
